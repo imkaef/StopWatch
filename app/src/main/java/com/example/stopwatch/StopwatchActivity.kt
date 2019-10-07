@@ -12,6 +12,7 @@ class StopwatchActivity : AppCompatActivity() {
 
     private var seconds: Int = 0
     private var running: Boolean = false
+    private var wasRunnung: Boolean = false
 
     final val handler = Handler()
     private fun runTimer (){
@@ -36,6 +37,7 @@ class StopwatchActivity : AppCompatActivity() {
         if (savedInstanceState!=null){
             seconds=savedInstanceState.getInt("seconds")
             running=savedInstanceState.getBoolean("running")
+            wasRunnung=savedInstanceState.getBoolean("wasRunnung")
         }
         runTimer()
 
@@ -52,9 +54,23 @@ class StopwatchActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        wasRunnung=running
+        running=false
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (wasRunnung){
+            running=true
+        }
+
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("seconds",seconds)
         outState.putBoolean("running",running)
+        outState.putBoolean("wasRunnung",wasRunnung)
         super.onSaveInstanceState(outState)
     }
 }
