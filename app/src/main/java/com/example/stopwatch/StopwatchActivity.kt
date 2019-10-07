@@ -54,19 +54,30 @@ class StopwatchActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
+   /* override fun onStop() {
         super.onStop()
         wasRunnung=running
         running=false
-    }
+    }*/
+    override fun onPause(){
+       super.onPause()
+       wasRunnung=running
+       running=false
+   }
 
-    override fun onStart() {
+   /* override fun onStart() {
         super.onStart()
         if (wasRunnung){
             running=true
         }
-
     }
+    */
+    override fun onResume(){
+       super.onResume()
+       if (wasRunnung)
+           running=true
+   }
+
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("seconds",seconds)
         outState.putBoolean("running",running)
